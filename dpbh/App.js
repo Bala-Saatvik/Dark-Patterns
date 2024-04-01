@@ -67,7 +67,7 @@ const Detect = () => {
       });
 
       // Replace 'YOUR_API_KEY' with the actual API key
-      const API_KEY = 'AIzaSyCGduddFw27fAqtJwiAfpYzNuwQjflyZ-s';
+      const API_KEY = 'Your API Key';
 
       const genAI = new GoogleGenerativeAI(API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
