@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        /* Define your dark and light theme styles here */
+        body.dark-mode {
+            background-color: #333;
+            color: black;
+        }
+        /* Add more styles as needed */
+        /* Hide the checkbox */
+        #switch-mode {
+            display: none;
+        }
+        /* Style the switch label */
+        .switch-mode {
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            background-color: #ccc;
+            border-radius: 17px;
+            position: relative;
+        }
+        /* Style the switch handle */
+        .switch-mode::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background-color: white;
+            border-radius: 50%;
+            top: 4px;
+            left: 4px;
+            transition: transform 0.3s ease;
+        }
+        /* Move the switch handle to the right for checked state */
+        #switch-mode:checked + .switch-mode::after {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Change Theme</h1>
+
+    <!-- Hidden checkbox input -->
+    <input type="checkbox" id="switch-mode">
+    <!-- Switch label -->
+    <label for="switch-mode" class="switch-mode"></label>
+
+    <script>
+        const themeToggle = document.getElementById('switch-mode');
+
+        // Check local storage for theme preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') {
+                themeToggle.checked = true;
+            }
+        }
+
+        // Toggle theme on checkbox change
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', '');
+            }
+        });
+    </script>
+</body>
+</html>

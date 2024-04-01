@@ -1,0 +1,18 @@
+Text, Sentiment, Source, Date/Time, User ID, Location, Confidence Score
+"I love this product!", Positive, Twitter, 2023-06-15 09:23:14, @user123, New York, 0.85
+"The service was terrible.", Negative, Yelp Reviews, 2023-06-15 11:45:32, user456, Los Angeles, 0.65
+"This movie is amazing!", Positive, IMDb, 2023-06-15 14:10:22, moviefan789, London, 0.92
+"I'm so disappointed with their customer support.", Negative, Online Forum, 2023-06-15 17:35:11, forumuser1, Toronto, 0.78
+"Just had the best meal of my life!", Positive, TripAdvisor, 2023-06-16 08:50:59, foodie22, Paris, 0.88
+"The quality of this product is subpar.", Negative, Amazon Reviews, 2023-06-16 10:15:27, shopper123, San Francisco, 0.72
+"I can't stop listening to this song. It's incredible!", Positive, Spotify, 2023-06-16 13:40:18, musiclover456, Berlin, 0.91
+"Their website is so user-friendly. Love it!", Positive, Website Testimonial, 2023-06-16 16:05:36, testimonialuser1, Sydney, 0.87
+"I loved the movie! It was fantastic!", Positive, IMDb, 2023-07-02 09:12:34, user123, New York, 0.92
+"The customer service was terrible.", Negative, Yelp Reviews, 2023-07-02 10:45:21, user456, Los Angeles, 0.65
+"This book made me feel inspired. Highly recommended!", Positive, Goodreads, 2023-07-02 12:34:56, bookworm789, London, 0.88
+"I'm extremely disappointed with their product quality.", Negative, Online Store, 2023-07-02 15:21:43, shopper789, San Francisco, 0.72
+"Just had the most amazing vacation! I can't wait to go back.", Positive, TripAdvisor, 2023-07-02 18:01:23, travelenthusiast1, Sydney, 0.93
+"The food at this restaurant was awful. Never going back again!", Negative, Zomato, 2023-07-02 20:45:37, foodlover123, Mumbai, 0.55
+"I can't stop listening to this song. It's my new favorite!", Positive, Spotify, 2023-07-03 09:17:52, musiclover789, Berlin, 0.91
+"Their website is so confusing and poorly designed.", Negative, Website Review, 2023-07-03 11:59:18, user789, Toronto, 0.68
+"I had an incredible experience at the theme park. So much fun!", Positive, Trip Report, 2023-07-03 14:40:05, thrillseeker1, Orlando, 0.89

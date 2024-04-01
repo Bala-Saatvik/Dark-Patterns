@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-3d"></script>
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>DPBH.AI</title>
+</head>
+<body>
+
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="index.html" class="brand">
+            <img src="ML Sentinel Squad Logo.png" width="50" height="50" style="margin-left: 5px; margin-right: 8px;">
+            <span class="text">DPBH.AI</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="index.html">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="analytics.html" onclick="showAnalytics()">
+                    <i class='bx bxs-doughnut-chart' ></i>
+                    <span class="text">Analytics</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="settings.html">
+                    <i class='bx bxs-cog' ></i>
+                    <span class="text">Settings</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bxs-log-out-circle' ></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell' ></i>
+                <span clas s="num">8</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="img/people.jpg">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+
+    </br>
+    <h2 align="center">Feedback</h2> 
+
+        <div class="graphBox">
+            <!--Chart1-->
+            <div class="box">
+                <h3 align="center">Location</h3>
+                <canvas id="locationChart" width="400" height="220"></canvas>
+            <!--Chart2-->
+            </div>
+            <div class="box">
+                <h3 align="center">Pattern Type Analysis</h3>
+                <canvas id="sentimentChart" width="400" height="220"></canvas>
+            </div>
+        </div>
+
+            <!--positive-->
+        <div class="progress">
+            <h1>Positive Feedback</h1>
+            <div class="progress-track">
+                <div id="positiveProgress" class="progress-bar positive-bar"></div>
+                <span id="positivePercentage" class="percentage">0%</span>
+            </div>
+            <!--negative-->
+            <h1>Negative Feedback</h1>
+            <div class="progress-track">
+                <div id="negativeProgress" class="progress-bar negative-bar"></div>
+                <span id="negativePercentage" class="percentage">0%</span>
+            </div>
+        </div>
+        
+
+       
+    
+           
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+    
+
+   
+    
+    
+
+
+    <style>
+        .progress {
+            width: 100%;
+            padding: 10px; /* Added padding for better visibility */
+        }
+
+        .progress-track {
+            position: relative;
+            height: 40px; /* Adjusted height */
+            margin-bottom: 10px; /* Added margin for spacing */
+        }
+
+        .progress-bar {
+            position: absolute;
+            height: 100%;
+            transition: width 0.5s ease-in-out;
+            border-radius: 20px; /* Adjusted radius */
+        }
+
+        .positive-bar {
+            background-color: green;
+        }
+
+        .negative-bar {
+            background-color: red;
+        }
+
+        .percentage {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 5px; /* Adjusted positioning */
+            color: white;
+            font-weight: bold;
+        }
+
+    </style>
+    
+    <script>
+        
+        // Fetch data from feedback.csv and update progress bars
+        fetch('http://localhost:8080/feedback.csv')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const rows = data.split('\n').slice(1); // Skip the header row
+                const feedbackData = rows.map(row => row.split(','));
+    
+                updateProgressBars(feedbackData);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    
+        // Function to calculate the percentage of positive and negative feedback
+        function calculateFeedbackPercentage(feedbackData) {
+            const totalFeedback = feedbackData.length;
+            
+            // Filter out undefined or null values before counting positive and negative feedback
+            const validFeedback = feedbackData.filter(feedback => feedback && feedback[1]);
+
+            const positiveFeedback = validFeedback.filter(feedback => feedback[1].trim() === 'Positive').length;
+            const negativeFeedback = validFeedback.filter(feedback => feedback[1].trim() === 'Negative').length;
+
+            const positivePercentage = (positiveFeedback / totalFeedback) * 100;
+            const negativePercentage = (negativeFeedback / totalFeedback) * 100;
+
+            return { positivePercentage, negativePercentage };
+        }
+
+    
+        // Function to update the progress bars
+        function updateProgressBars(feedbackData) {
+            const { positivePercentage, negativePercentage } = calculateFeedbackPercentage(feedbackData);
+
+            document.getElementById('positiveProgress').style.width = positivePercentage + '%';
+            document.getElementById('positivePercentage').textContent = `${positivePercentage.toFixed(2)}%`;
+
+            document.getElementById('negativeProgress').style.width = negativePercentage + '%';
+            document.getElementById('negativePercentage').textContent = `${negativePercentage.toFixed(2)}%`;
+        }
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script src="my_chart.js"></script>
+    <script src="script.js"></script>
+    
+
+</body>
+</html>
